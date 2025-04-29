@@ -21,7 +21,8 @@ RUN apt-get update && \
     # Clean up
     && rm -rf /var/lib/apt/lists/* \
     # Install additional build tools if needed
-    && apt-get update && apt-get install -y build-essential
+    && apt-get update && apt-get install -y build-essential  libzip-dev zip \
+    && docker-php-ext-install zip
 
 # 2. Verificar versiones instaladas
 RUN node --version && npm --version

@@ -20,6 +20,7 @@ Route::group([
     // CRUD para administradores
     Route::crud('sala', 'SalaCrudController');
     Route::crud('reserva', 'ReservaCrudController');
+    Route::get('reserva/export', 'ReservaCrudController@exportExcel')->name('reserva.export');
 });
 
 /**
