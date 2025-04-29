@@ -18,10 +18,11 @@ class Sala extends Model
     */
 
     protected $table = 'salas';
+
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = ['nombre', 'descripcion', 'capacidad', 'disponible'];
     // protected $hidden = [];
 
     /*
@@ -29,6 +30,10 @@ class Sala extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+    public function reservas()
+    {
+        return $this->hasMany(Reserva::class);
+    }
 
     /*
     |--------------------------------------------------------------------------
