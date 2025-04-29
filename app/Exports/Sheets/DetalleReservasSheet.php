@@ -20,7 +20,7 @@ class DetalleReservasSheet implements FromCollection, WithMapping, WithHeadings
         return [
             $reserva->user->name,           // Cliente
             $reserva->sala->nombre,         // Sala
-            $reserva->fecha->format('Y-m-d'),// Fecha
+            $reserva->fecha,
             $reserva->hora_inicio,          // Hora de Reserva
         ];
     }

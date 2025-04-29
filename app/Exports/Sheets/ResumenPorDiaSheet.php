@@ -17,7 +17,7 @@ class ResumenPorDiaSheet implements FromCollection, WithHeadings
             ->get()
             ->map(function($row) {
                 return [
-                    $row->fecha->format('Y-m-d'),
+                    $row->fecha,
                     $row->total_reservas,     // total horas en ese día
                 ];
             });

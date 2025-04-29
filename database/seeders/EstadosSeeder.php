@@ -13,8 +13,17 @@ class EstadosSeeder extends Seeder
      */
     public function run(): void
     {
-        Estado::create(['nombre' => 'pendiente']);
-        Estado::create(['nombre' => 'aceptada']);
-        Estado::create(['nombre' => 'rechazada']);
+        $estados = [
+            1 => 'pendiente',
+            2 => 'aceptada',
+            3 => 'rechazada',
+        ];
+
+        foreach ($estados as $id => $nombre) {
+            Estado::updateOrCreate(
+                ['id' => $id],
+                ['nombre' => $nombre]
+            );
+        }
     }
 }

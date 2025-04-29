@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); // Relación con el usuario (cliente)
             $table->unsignedBigInteger('sala_id'); // Relación con la sala
             $table->unsignedBigInteger('estado_id'); // Relación con el estado
-            $table->dateTime('fecha_reserva'); // Fecha y hora de la reserva
+            $table->dateTime('fecha');
             $table->time('hora_inicio'); // Hora de inicio de la reserva
             $table->time('hora_fin'); // Hora de fin de la reserva
             $table->timestamps();

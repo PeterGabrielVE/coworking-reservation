@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/', backpack_url('login'));
 
 Route::get('/dashboard', function () {
     return view('dashboard');

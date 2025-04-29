@@ -43,4 +43,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            // Sólo si no tiene ningún rol
+            if ($user->roles->isEmpty()) {
+                $user->assignRole('cliente');
+            }
+        });
+    }
+
 }
