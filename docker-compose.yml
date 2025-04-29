@@ -1,0 +1,65 @@
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: coworking-reservation
+    container_name: coworking-app
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+      - /var/www/html/vendor
+      - /var/www/html/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=laravel_db
+      - DB_USERNAME=laravel_user
+      - DB_PASSWORD=secret
+    command: >
+      sh -c "
+      composer install --no-interaction --optimize-autoloader &&
+      npm install &&
+      php artisan key:generate --force &&
+      php artisan config:clear &&
+      php artisan cache:clear &&
+      chmod -R 775 storage bootstrap/cache &&
+      chown -R www-data:www-data storage bootstrap/cache &&
+      apache2-foreground
+      "
+    networks:
+      - coworking-net
+
+  db:
+    image: mysql:8.0
+    container_name: coworking-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: laravel_db
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: secret
+    volumes:
+      - db-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    networks:
+      - coworking-net
+
+volumes:
+  db-data:
+
+networks:
+  coworking-net:
+    driver: bridge
