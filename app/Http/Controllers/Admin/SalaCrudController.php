@@ -21,7 +21,7 @@ class SalaCrudController extends CrudController
 
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
-     * 
+     *
      * @return void
      */
     public function setup()
@@ -33,7 +33,7 @@ class SalaCrudController extends CrudController
 
     /**
      * Define what happens when the List operation is loaded.
-     * 
+     *
      * @see  https://backpackforlaravel.com/docs/crud-operation-list-entries
      * @return void
      */
@@ -49,24 +49,56 @@ class SalaCrudController extends CrudController
 
     /**
      * Define what happens when the Create operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
     protected function setupCreateOperation()
     {
         CRUD::setValidation(SalaRequest::class);
-        CRUD::setFromDb(); // set fields from db columns.
 
-        /**
-         * Fields can be defined using the fluent syntax:
-         * - CRUD::field('price')->type('number');
-         */
+        CRUD::addField([
+            'name' => 'nombre',
+            'label' => 'Nombre de la Sala',
+            'type' => 'text',
+            'attributes' => [
+                'required' => 'required',
+                'placeholder' => 'Ej: Sala de Conferencias A'
+            ]
+        ]);
+
+        CRUD::addField([
+            'name' => 'descripcion',
+            'label' => 'Descripción',
+            'type' => 'textarea',
+            'attributes' => [
+                'required' => 'required',
+                'rows' => 3
+            ]
+        ]);
+
+        CRUD::addField([
+            'name' => 'capacidad',
+            'label' => 'Capacidad Máxima',
+            'type' => 'number',
+            'attributes' => [
+                'required' => 'required',
+                'min' => 1,
+                'step' => 1
+            ]
+        ]);
+
+        CRUD::addField([
+            'name' => 'disponible',
+            'label' => 'Disponible',
+            'type' => 'checkbox',
+            'default' => 1
+        ]);
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
